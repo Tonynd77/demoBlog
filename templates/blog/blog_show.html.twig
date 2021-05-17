@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    BlogSymfony | Detail de l'article
+{% endblock %}
+
+{% block body %}
+    <h1 class="display-4 fst-italic text-center" >Détail de l'article</h1>
+
+    <div class="container">
+
+        <div class="col-md-12">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">World</strong>
+                    <h3 class="mb-0">{{article.titre}}</h3>
+                    <div class="mb-1 text-muted">Posté le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i:s') }}</div>
+                    <p class="card-text mb-auto">{{ article.contenu|raw }}</p>
+                    <a href="{{ path('blog') }}">Retour aux articles</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                    <img src="{{ article.image|replace({'300/300':'600/600'}) }}" alt="{{article.image}}">
+
+                    </div>
+                </div>
+        </div>
+    
+    </div>
+{% endblock %}

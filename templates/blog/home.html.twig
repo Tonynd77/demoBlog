@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+{# Twig est un moteur de template, un langage de rendu, toute les données provenant du controller seront traitées avec le langage Twig, donc plus aucune ligne de PHP dans les rendus visuel  #}
+{% block body  %}
+
+{# {{ }} -> double accolades, ce que l'on appel une interpolation #}
+{# {% %} -> commande twig #}
+{# title : variable Twig qui provient du controller BlogController -> render([]) #}
+
+
+
+<div class="container text-center ">
+
+    <h1 class="display-4 fst-italic my-5">{{ title }}</h1>
+    {# {% if age > 18 %}
+    <p>Tu es majeur et tu as {{ age }} ans !</p>
+    {% else %}
+    <p>Tu es mineur !</p>
+    {% endif %} #}
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente molestias in eum aperiam, dolore a animi quis debitis facere dolor reprehenderit nisi labore? Accusamus cumque ab rerum qui veritatis aliquid! Alias in delectus explicabo aliquid consectetur, laboriosam animi ducimus nostrum at aliquam id ipsa repellendus, quas inventore culpa officia sint ipsum similique quisquam maxime! Nostrum explicabo magnam praesentium. Accusantium praesentium nemo nam culpa corporis in voluptatibus facilis deserunt, necessitatibus dolores totam mollitia quae animi cumque fuga eligendi voluptatum aspernatur optio. Fugiat aspernatur, iure dolore, natus accusantium minus accusamus in laborum vitae quibusdam voluptates commodi ducimus! Dolor harum atque et omnis.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem harum cumque ab minima ad saepe quibusdam earum alias, laboriosam soluta veniam deserunt asperiores perspiciatis quaerat inventore, sapiente suscipit provident, nobis voluptas expedita rem illum natus exercitationem esse? Explicabo, recusandae doloremque obcaecati omnis nobis blanditiis quaerat vitae sunt saepe voluptate provident.
+    </p>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium vitae maiores itaque dicta placeat eveniet quis aperiam sunt quibusdam earum ducimus asperiores, qui fugit eum voluptas possimus tempore repudiandae! Quisquam reiciendis et quibusdam commodi praesentium quod ducimus, ab consequatur, ipsum id, error dolor cum. Repellat deserunt laboriosam corrupti commodi debitis.
+    </p>
+
+</div>
+
+
+{% endblock %}
