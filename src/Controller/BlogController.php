@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManager;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,7 +123,7 @@ class BlogController extends AbstractController
      */
 
     // INJECTION DEPANDANCE
-    public function blog_show(Article $article): Response
+    public function blog_show(Request $request, Article $article, EntityManagerInterface $manager): Response
     {
         // dump($id);
 
@@ -131,8 +133,35 @@ class BlogController extends AbstractController
         // $article = $repoArticle->find($id);
         dump($article);
 
+        $comment = new Comment;
+
+        $formComment = $this->createForm(CommentType::class, $comment);
+
+        dump($request);
+
+        $formComment->handleRequest($request);
+
+        dump($comment);
+
+        if($formComment->isSubmitted() && $formComment->isValid())
+        {
+            $comment->setDate(new \DateTime)
+                    ->setArticle($article);
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            $this->addFlash('success', "Le commentaire a été posté avec succès !");
+
+            return $this->redirectToRoute('blog_show', [
+                'id' => $article->getId()
+            ]);
+
+        }
+
         return $this->render('blog/blog_show.html.twig', [
-            'article' => $article
+            'article' => $article,
+            'formComment' => $formComment->createView()
         ]);
     }
 }
