@@ -91,7 +91,10 @@ class BlogController extends AbstractController
 
         if($formArticle->isSubmitted() && $formArticle->isValid())
         {
-            $article->setDate(new \DateTime());
+            if(!$article->getId())
+            {
+                $article->setDate(new \DateTime());
+            }
 
             $manager->persist($article);
             $manager->flush();
@@ -102,7 +105,10 @@ class BlogController extends AbstractController
         }
 
         return $this->render('blog/create.html.twig', [
-            'formArticle' =>$formArticle->createView()
+            'formArticle'   => $formArticle->createView(),
+            'editMode'      => $article->getId(), // Si editMode dans le template renvoi TRUE, alors l'article possède un ID, c'est une modification sinon elle renvoi FALSE, c'est une insertion
+
+
         ]);
     }
 
