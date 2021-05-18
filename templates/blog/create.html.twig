@@ -5,7 +5,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1 class="display-4 fst-italic text-center">Nouvel article</h1>
+
+
+    <h1 class="display-4 fst-italic text-center">
+    {% if editMode %}
+        Modification de l'article
+    {% else %}
+        Nouvel article
+    {% endif %}
+
+    </h1>
 
     <div class="container">
         
@@ -17,7 +26,15 @@
 
             {{ form_row(formArticle.image) }}
 
-            <input type="submit" class="btn btn-dark" value="Enregistrer">
+            <button type="submit" class="btn btn-dark">
+
+                {% if editMode %}
+                    Enregistrer les modifications
+                {% else %}
+                    Enregistrer
+                {% endif %}
+
+            </button>
 
         {{ form_end(formArticle) }}
 
