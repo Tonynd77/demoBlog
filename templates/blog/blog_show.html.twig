@@ -9,22 +9,65 @@
 
     <div class="container">
 
+        {% for message in app.flashes('success') %}
+            
+            <div class="col-md-4 mx-auto alert alert-success text-center">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
         <div class="col-md-12">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">World</strong>
-                    <h3 class="mb-0">{{article.titre}}</h3>
-                    <div class="mb-1 text-muted">Posté le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i:s') }}</div>
-                    <p class="card-text mb-auto">{{ article.contenu|raw }}</p>
-                    <a href="{{ path('blog') }}">Retour aux articles</a>
-                    <a href="{{ path('blog_edit', {'id': article.id}) }}">Modification de l'articles</a>
+                    <strong class="d-inline-block mb-2 text-primary">{{ article.category.titre }}</strong>
+                        <h3 class="mb-0">{{article.titre}}</h3>
+                        <div class="mb-1 text-muted">Posté le {{ article.date|date('d/m/Y') }} à {{ article.date|date('H:i:s') }}</div>
+                        <p class="card-text mb-auto">{{ article.contenu|raw }}</p>
+                        <a href="{{ path('blog') }}">Retour aux articles</a>
+                        <a href="{{ path('blog_edit', {'id': article.id}) }}">Modification de l'articles</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                    <img src="{{ article.image|replace({'300/300':'600/600'}) }}" alt="{{article.image}}">
-
+                        <img src="{{ article.image|replace({'300/300':'600/600'}) }}" alt="{{article.image}}">
                     </div>
                 </div>
         </div>
-    
+
+        <h4 class="my-4">Donner votre avis...</h4>
+
+        {{ form_start(formComment, {'attr': {'class': 'col-md-6'}}) }}
+
+            {{form_row(formComment.auteur)}}
+
+            {{form_row(formComment.commentaire, {'attr': {'rows': 9}}) }}
+
+            <button type="submit" class="btn btn-dark mt-2">Poster</button>
+
+        {{ form_end(formComment) }}
+
+        {% if article.comments is not empty %}
+            
+        <h4 class="my-4">Vos réactions...</h4>
+
+        <div class="row mb-5">
+        
+            {% for comment in article.comments %}
+                {# {{dump(comment)}} #}
+                <div class="col-md-4 py-2 shadow">
+                    <strong>{{comment.auteur}}</strong>
+                    <small class="font-italic">Posté le {{ comment.date|date('d/m/Y à H:i:s') }}</small>
+                </div>
+                <div class="col-md-8 py-2 shadow">
+                {{comment.commentaire|raw}}
+                </div>
+
+            {% endfor %}
+        
+        </div>
+
+        {% else %}
+            <h4 class="my-4">Soyez le premier à poster votre avis...</h4>
+
+        {% endif %}
     </div>
 {% endblock %}

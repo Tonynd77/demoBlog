@@ -2,8 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Article;
 use DateTime;
+use Faker\Factory;
+use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -11,19 +14,54 @@ class ArticleFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // On boucle de 10 fois pour créer 10 articles
-        for($i = 1; $i <= 10; $i++)
+        $faker = \Faker\Factory::create('fr_FR');
+
+        for($i = 1; $i <= 3; $i++)
         {
-            // Importer classe ctrrrl + alt + i
-            $article = new Article();
+            $category = new Category;
 
-            $article->setTitre("Titre de l'article n°$i")
-                    ->setContenu("<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In, dicta eveniet? Expedita, ratione tempore labore rerum esse, quis voluptas deserunt quibusdam nulla exercitationem provident necessitatibus numquam inventore! Aspernatur eveniet, ut laboriosam omnis recusandae placeat illum nemo velit aliquid laudantium explicabo, consequatur dignissimos. Explicabo facilis dicta eius exercitationem non. Rem neque est similique dolor fugiat corrupti accusamus porro, rerum ipsum totam molestias nulla quae nemo provident voluptatibus doloremque a minus blanditiis! Earum sequi commodi sapiente voluptates dicta accusantium similique dolore repudiandae. Repudiandae et vel nemo rem voluptatum cum qui perspiciatis est rerum, tempora minus soluta odio, similique itaque tenetur, modi porro!</p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In, dicta eveniet? Expedita, ratione tempore labore rerum esse, quis voluptas deserunt quibusdam nulla exercitationem provident necessitatibus numquam inventore! Aspernatur eveniet, ut laboriosam omnis recusandae placeat illum nemo velit aliquid laudantium explicabo, consequatur dignissimos. Explicabo facilis dicta eius exercitationem non. Rem neque est similique dolor fugiat corrupti accusamus porro, rerum ipsum totam molestias nulla quae nemo provident voluptatibus doloremque a minus blanditiis! Earum sequi commodi sapiente voluptates dicta accusantium similique dolore repudiandae. Repudiandae et vel nemo rem voluptatum cum qui perspiciatis est rerum, tempora minus soluta odio, similique itaque tenetur, modi porro!</p>")
-                    ->setImage("https://picsum.photos/300/300?grayscale")
-                    ->setDate(new \DateTime());
+            $category->setTitre($faker->word)
+                    ->setDescription($faker->paragraph());
 
-                    $manager->persist($article); // prepare et on garde en mémoire les requetes SQL d'insertions
+            $manager->persist($category);
+
+            // création de 4 à 10 Articles
+            for($j = 1; $j <= mt_rand(4,9); $j++)
+            {
+                $article = new Article;
+
+                $content = '<p>' . join($faker->paragraphs(5), '</p><p>') . '</p>';
+
+                $article->setTitre($faker->sentence())
+                        ->setContenu($content)
+                        ->setImage("https://picsum.photos/id/23$j/300/300")
+                        ->setDate($faker->dateTimeBetween('-6 months'))
+                        ->setCategory($category);
+
+                $manager->persist($article);
+
+                // Création de 4 à 10 commentaires
+                for($k = 1; $k <= mt_rand(4,10); $k++)
+                {
+                    $comment = new Comment;
+
+                    $content = '<p>' . join($faker->paragraphs(2), '</p><p>') . '</p>';
+
+                    $now = new DateTime;
+                    $interval = $now->diff($article->getDate());
+                    $days = $interval->days;
+                    $minimum = "-$days days";
+
+                    $comment->setAuteur($faker->name())
+                            ->setCommentaire($content)
+                            ->setDate($faker->dateTimeBetween($minimum))
+                            ->setArticle($article);
+
+                    $manager->persist($comment);
+                }
+            }
         }
-        $manager->flush(); // permet d'executerrr les requetes SQL en BDD
+
+        $manager->flush();
     }
 }
