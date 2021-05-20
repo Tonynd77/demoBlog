@@ -37,6 +37,10 @@ class SecurityController extends AbstractController
 
             $manager->persist($user);
             $manager->flush();
+
+            $this->addFlash('success', "Felicitations ! Votre compte a été validé, vous pouvez des à présent vous connecter.");
+
+            return $this->redirectToRoute('security_login');
         }
 
         return $this->render('security/registration.html.twig', [
@@ -56,7 +60,10 @@ class SecurityController extends AbstractController
         // Récupération du dernier username (email) saisi par l'internaute en cas d'erreur de connexion
         $lastEmail = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig');
+        return $this->render('security/login.html.twig', [
+            'error' => $error,
+            'lastEmail' => $lastEmail
+        ]);
     }
 
     /**
