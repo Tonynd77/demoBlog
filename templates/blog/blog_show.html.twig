@@ -28,7 +28,7 @@
                         <a href="{{ path('blog_edit', {'id': article.id}) }}">Modification de l'articles</a>
                     </div>
                     <div class="col-auto d-none d-lg-block">
-                        <img src="{{ article.image|replace({'300/300':'600/600'}) }}" alt="{{article.image}}">
+                        <img src="{{ asset('uploads/images/' ~ article.image) }}" alt="{{article.titre}}">
                     </div>
                 </div>
         </div>
