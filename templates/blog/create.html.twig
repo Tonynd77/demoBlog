@@ -28,6 +28,15 @@
 
             {{ form_row(formArticle.image) }}
 
+            {% if imageArticle %}
+                
+                <p class="mt-2">
+                    <em>Vous pouvez uploader une image si vous souhaiter la modifier</em><br>
+                    <img src="{{ asset('uploads/images/' ~ imageArticle) }}" alt="">
+                </p>
+
+            {% endif %}
+
             <button type="submit" class="btn btn-dark">
 
                 {% if editMode %}

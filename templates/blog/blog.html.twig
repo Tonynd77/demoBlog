@@ -28,8 +28,8 @@
                     <p class="card-text mb-auto">{{ OneArticle.contenu|striptags|slice(0,100) }}</p>
                     <a href="{{ path('blog_show',{'id': OneArticle.id}) }}" class="stretched-link">Lire la suite</a>
                 </div>
-                <div class="col-auto d-none d-lg-block">
-                    <img src="{{ OneArticle.image }}" alt="{{OneArticle.titre}}">
+                <div class="col-md-6 d-none d-lg-block">
+                    <img src="{{ asset('uploads/images/' ~ OneArticle.image) }}" alt="{{OneArticle.titre}}" class="col-md-12">
                 </div>
             </div>
         </div>
