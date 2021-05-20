@@ -37,6 +37,11 @@
                 </a>
                 
                 {% if app.user %}
+                    
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-sm btn-outline-secondary mx-2" href="{{ path('admin') }}">BACKOFFICE</a>
+                    {% endif %}
+
                     <a class="btn btn-sm btn-outline-secondary" href="{{ path('security_logout') }}">Déconnexion</a>
                 {% else %}
                     <a class="btn btn-sm btn-outline-secondary" href="{{ path('security_login') }}">Identifiez-vous</a>

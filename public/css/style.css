@@ -1,3 +1,11 @@
 .form-error-icon{
     background-color: #dc3545;
 }
+
+.img-article{
+    width: 150px;
+}
+
+tr, td {
+    vertical-align: middle; 
+}
