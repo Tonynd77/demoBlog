@@ -1,0 +1,38 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    BlogSymfony | Gestion des membres
+{% endblock %}
+
+{% block body %}
+
+    {# <h1>Gestion des membres</h1> #}
+    <table class="table table-bordered mt-4">
+        <tr>
+            {% for data in colonnes %}
+
+            {% if data != 'password' %}
+
+                <th>{{ data|upper }}</th>
+
+            {% endif %}
+            {% endfor %}
+                <th>MODIF ROLE MEMBRE</th>
+        </tr>
+
+        {% for data in users %}
+                <tr class="text-center">
+                    <td>{{data.id}}</td>
+                    <td>{{ data.nom }}</td>
+                    <td>{{ data.prenom }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.username }}</td>
+                    {% if data.roles[0] == 'ROLE_ADMIN' %}
+                        <td class="bg-danger text-white">ADMIN</td>
+                    {% else %}
+                        <td>MEMBRE</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+    </table>
+{% endblock %}
