@@ -25,8 +25,14 @@
                     <strong class="d-inline-block mb-2 text-primary">{{ OneArticle.category.titre }}</strong>
                     <h3 class="mb-0">{{OneArticle.titre}}</h3>
                     <div class="mb-1 text-muted">Posté le {{ OneArticle.date|date('d/m/Y') }} à {{ OneArticle.date|date('H:i:s') }} </div>
-                    <p class="card-text mb-auto">{{ OneArticle.contenu|striptags|slice(0,100) }}</p>
-                    <a href="{{ path('blog_show',{'id': OneArticle.id}) }}" class="stretched-link">Lire la suite</a>
+                    <p class="card-text mb-auto">{{ OneArticle.contenu|striptags|slice(0,100)|raw }}</p>
+
+                    {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('blog_show',{'id': OneArticle.id}) }}" class="stretched-link">Lire la suite</a>
+                    {% else %}
+                        <a href="{{ path('security_login') }}" class="stretched-link">Identifiez-vous pour lire la suite</a>
+                    {% endif %}
+                    
                 </div>
                 <div class="col-md-6 d-none d-lg-block">
                     <img src="{{ asset('uploads/images/' ~ OneArticle.image) }}" alt="{{OneArticle.titre}}" class="col-md-12">

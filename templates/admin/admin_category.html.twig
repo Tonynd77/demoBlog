@@ -5,7 +5,17 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('blog_create') }}" class="btn btn-primary mt-4">CREATION D'UNE NOUVELLE CATEGORIE</a>
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+
+        {% for message in messages %}
+            <p class="col-md-4 bg-{{ label }} text-center p-3 text-white mx-auto rounded mt-4">
+                {{ message }}
+            </p>
+        {% endfor %}
+    
+    {% endfor %}
+
+    <a href="{{ path('admin_new_categorie') }}" class="btn btn-primary mt-4">CREATION D'UNE NOUVELLE CATEGORIE</a>
     <table class="table table-bordered mt-2">
         <tr>
             {% for data in colonnes %}
@@ -18,19 +28,19 @@
         
             {% for data in categories %}
                 <tr>
-                    <th class="text-center">{{data.id}}</th>
-                    <th class="text-center">{{ data.titre }}</th>
-                    <th>{{ data.description }}</th>
+                    <td class="text-center">{{data.id}}</td>
+                    <td class="text-center">{{ data.titre }}</td>
+                    <td>{{ data.description }}</td>
                     <td class="text-center">{{ data.articles|length }}</td>
 
                     <td>
-                        <a href="{{ path('blog_edit', {'id': data.id}) }}" class="btn btn-dark">
+                        <a href="{{ path('admin_edit_categorie', {'id': data.id}) }}" class="btn btn-dark">
                             <i class="bi bi-pencil-square"></i>
                         </a>
                     </td>
 
                     <td>
-                        <a href="{{ path('admin_article_remove', {'id': data.id}) }}" class="btn btn-danger" onclick="return(confirm('Voulez-vous réellement supprimer cet article ?'));">
+                        <a href="{{ path('admin_remove_categorie', {'id': data.id}) }}" class="btn btn-danger" onclick="return(confirm('Voulez-vous réellement supprimer cette catégorie ?'));">
                             <i class="bi bi-trash"></i>
                         </a>
                     </td>

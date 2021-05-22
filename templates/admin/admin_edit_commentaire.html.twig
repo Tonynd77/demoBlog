@@ -1,0 +1,21 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    BlogSymfony | Modifier commentaire
+{% endblock %}
+
+{% block body %}
+
+    
+
+    {{ form_start(formCommentaire, {'attr': {'class': 'col-md-5 mx-auto mt-3' }}) }}
+        
+        {{ form_row(formCommentaire.auteur) }}
+
+        {{ form_row(formCommentaire.commentaire, {'attr': {'rows': 15}}) }}
+
+        <button type="submit" class="btn btn-dark mt-2">Enregistrer</button>
+
+    {{ form_end(formCommentaire) }}
+    
+{% endblock %}

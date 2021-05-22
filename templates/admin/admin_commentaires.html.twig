@@ -1,0 +1,55 @@
+{% extends "base_admin.html.twig" %}
+
+{% block title %}
+    BlogSymfony | Gestion des commentaires
+{% endblock %}
+
+{% block body %}
+    {# <h1>Gestion des commentaires</h1> #}
+    
+    {% for message in app.flashes('success') %}
+        
+        <p class="col-md-4 bg-success text-center p-3 text-white mx-auto rounded mt-4">
+            {{ message }}
+        </p>
+
+    {% endfor %}
+    
+    <table class="table table-bordered mt-2">
+        <tr>
+            {% for data in colonnes %}
+
+                <th>{{ data|upper }}</th>
+
+            {% endfor %}
+            <th>TITRE ARTICLE</th>
+            <th>MODIF</th>
+            <th>SUP</th>
+        </tr>
+
+        {% for data in commentaires %}
+                <tr>
+                    <td class="text-center">{{data.id}}</td>
+                    <td class="text-center">{{ data.auteur }}</td>
+                    <td>{{ data.commentaire|raw }}</td>
+                    <td>{{ data.date|date('d/m/Y à H:i:s') }}</td>
+                    <td><a href="{{ path('blog_show', {'id': data.article.id }) }}">{{ data.article.titre }}</a></td>
+                    
+                    <td>
+                        <a href="{{ path('admin_edit_commentaire', {'id': data.id}) }}" class="btn btn-dark">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{{ path('admin_remove_commentaire', {'id': data.id}) }}" class="btn btn-danger" onclick="return(confirm('Voulez-vous réellement supprimer cet article ?'));">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            
+
+    </table>
+    
+{% endblock %}

@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -21,11 +22,24 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "15",
+     *      minMessage = "Catégorie trop courte",
+     *      maxMessage = "Catégorie trop longue"
+     * )
+     * 
+     * @Assert\NotBlank(
+     *      message = "Merci de saisir un titre de catégorie"
+     * )
      */
     private $titre;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank(
+     *      message = "Merci de saisir une description de catégorie"
+     * )
      */
     private $description;
 
@@ -49,7 +63,7 @@ class Category
         return $this->titre;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitre(?string $titre): self
     {
         $this->titre = $titre;
 

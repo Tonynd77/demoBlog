@@ -23,8 +23,8 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
-     *      min = 5,
-     *      max = 50,
+     *      min = "5",
+     *      max = "50",
      *      minMessage = "Titre trop court",
      *      maxMessage = "Titre trop long"
      * )
